@@ -461,6 +461,36 @@ iframe {
     display: none; /* Inicialmente oculto */
 }
 
+
+        #additionalButtonsLOGOUT {
+            position: absolute;
+            top: 600px;
+            left: 320px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .additionalButtonsLOGOUT {
+            width: 180px;
+            height: 50px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 212, 255, 0.1);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+        .additionalButtonsLOGOUT:hover {
+            background-color: #5aa0da;
+            transform: translateY(-10px);
+            transition: transform 0.3s ease;
+        }
+
+
+
+
     </style>
 </head>
 <body>
@@ -471,7 +501,9 @@ iframe {
         <button id="documentosButtonVigor">Documentos Vigor</button>
         <button id="documentosButtonTrabalho">Documentos Trabalho</button>
         <button id="documentosButtonKpi">KPI's</button>
-        <button id="documentosButtonRNC">RNC's</button>
+        <button id="documentosButtonRNC">RNC's</button><p><p>
+        <button id="documentosButtonLOG" onclick="closeApp()">Log Out</button>
+        
         <div class="footer" id="date-time">sexta-feira, 17 de janeiro de 2025 às 08:54:15</div>
     </div>
 <div class="main-content">
@@ -601,6 +633,7 @@ iframe {
 </button>
 
 
+  
 
 
   
@@ -795,9 +828,15 @@ document.querySelector(".additionalButtonsVigor")?.querySelectorAll("a").forEach
             isMinimized = !isMinimized;
         }
       
-
       
       <!------------------------------------------------------------------->
+      
+      
+   function closeApp() {
+            window.opener.location.href = "https://fragosoq.github.io/SMGdesk/";
+            window.close();
+        }
+      
  
     </script>
 </body>
