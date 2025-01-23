@@ -82,8 +82,12 @@
 
             // Verifica se as credenciais estão corretas
             if (credentials[username] && credentials[username].password === password) {
-                // Redireciona para a URL correspondente
-                window.location.href = credentials[username].url;
+                // Abre a URL correspondente em uma janela nova tipo APP
+                const width = screen.width * 0.5;
+                const height = screen.height;
+                const left = screen.width - width;
+                const top = 0;
+                window.open(credentials[username].url, '_blank', `width=${width},height=${height},left=${left},top=${top},toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no`);
             } else {
                 // Exibe mensagem de erro caso o login seja inválido
                 errorDiv.textContent = "Usuário ou senha inválidos.";
