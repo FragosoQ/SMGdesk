@@ -1,1 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGQA - Sistema de Gestão Documental</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+    
+          body {
+            margin: 0;
+            font-family: 'Source Sans Pro', Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-image: url('https://static.wixstatic.com/media/a6967f_efae408b13fd46be84bf781ea591078b~mv2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(90deg, rgba(81, 184, 234, 0.8) 0%, rgba(27, 71, 148, 0.8) 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+        .sidebar h1 {
+            font-size: 80px;
+            margin-bottom: 1px;
+          margin-top: 10px;
+        }
+        .sidebar .bar {
+            width: 160px;
+            height: 5px;
+            background-color: white;
+            margin-top: 1px;
+        }
+        .sidebar button {
+            width: 200px;
+            height: 80px;
+            margin: 20px;
+            padding: 10px;
+            background: rgba(0,212,255,0.1);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao botão */
+        }
 
+        .sidebar button:hover {
+            background-color: #5aa0da;
+            transform: translateY(-10px);
+            transition: transform 0.3s ease;
+        }
+        .sidebar .footer {
+            margin-top: auto;
+            font-size: 12px;
+            color: white;
+        }
+        .main-content {
+            width: 100%;
+            height: 80px;
+            border-radius: 15px;
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+            background-color: rgba(128, 128, 128, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            font-size: 120px;
+            font-weight: bold; 
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 5px;
+        }
+        .main-content img {
+            position: absolute;
+            left: 10px;
+            height: 60px;
+        }
+        .main-content .buttons {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        .main-content .button {
+            width: 35px;
+            height: 35px;
+            background-color: transparent;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .main-content .button i {
+            color: white;
+            font-size: 16px; /* Reduz o tamanho do ícone */
+        }
+        .header {
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 40px;
+            width: 100%;
+        }
+
+        /* Estilo para o calendário */
+        #calendar {
+            border: 0;
+            position: fixed;
+            width: 10vw;
+            height: 40px;
+            bottom: 50px;
+            right: 80px;
+            border-radius: 15px;
+            opacity: 0.8;
+            z-index: 1050;
+            transition: all 0.3s ease;
+        }
+
+        #toggleButton2 {
+            position: fixed;
+            bottom: 50px;
+            right: 20px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: grey;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Estilo para o botão de notas */
+        #noteButton {
+            position: fixed;
+            top: 120px;
+            left: 315px;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(123,123,149,0.5) 35%, rgba(201,216,219,0.5) 100%);
+            color: white;
+            border: none;
+            
+          border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Estilo para a janela de notas */
+        #notesWindow {
+            position: absolute;
+            top: 180px;
+            left: 310px;
+            width: 500px;
+            height: 50px;
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            border-radius: 5px;
+            padding: 5px;
+            display: none;
+            z-index: 1000;
+           
+        }
+
+        /* Estilo para o container de botões adicionais */
+        #additionalButtonsVigor {
+            display: none;
+            position: absolute;
+            top: 230px;
+            left: 320px;
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo para os botões dentro do container */
+        .additionalButtonVigor {
+            width: 180px;
+            height: 50px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,212,255,0.1);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+
+        .additionalButtonVigor:hover {
+            background-color: #5aa0da;
+            transform: translateY(-10px);
+            transition: transform 0.3s ease;
+        }
+      
+      
+      
+      
+          /* Estilo para o container de botões adicionais Trabalho*/
+        #additionalButtonsTrabalho {
+            display: none;
+            position: absolute;
+            top: 350px;
+            left: 320px;
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo para os botões dentro do container */
+        .additionalButtonTrabalho {
+            width: 180px;
+            height: 50px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,212,255,0.1);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+
+        .additionalButtonTrabalho:hover {
+            background-color: #5aa0da;
+            transform: translateY(-10px);
+            transition: transform 0.3s ease;
+        }
+      
+      
+      
+           /* Estilo para o container de botões adicionais KPI*/
+        #additionalButtonsKpi {
+            display: none;
+            position: absolute;
+            top: 480px;
+            left: 320px;
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo para os botões dentro do container */
+        .additionalButtonKpi {
+            width: 180px;
+            height: 50px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,212,255,0.1);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+
+        .additionalButtonKpi:hover {
+            background-color: #5aa0da;
+            transform: translateY(-10px);
+            transition: transform 0.3s ease;
+        }
+      
+          /* Estilo para o container de botões adicionais RNCs*/
+        #additionalButtonsRNC {
+            display: none;
+            position: absolute;
+            top: 600px;
+            left: 320px;
+            /*background-color: rgba(255, 255, 255, 0.8);*/
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo para os botões dentro do container */
+        .additionalButtonRNC {
+            width: 180px;
+            height: 50px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0,212,255,0.1);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+
+        .additionalButtonRNC:hover {
+            background-color: #5aa0da;
+            transform: translateY(-10px);
+            transition: transform 0.3s ease;
+        }
+      
+      
+      
+#iframeContainer {
+    position: relative;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+#closeIframe {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+#closeIframe:hover {
+    background-color: darkred;
+}
+      
+      
+      
+     /* Estilo para o modal */
+/*.iframe-modal {
+    display: none; /* Inicialmente oculto 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}*/
+
+/*.iframe-content {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    width: 80%;
+    height: 80%;
+}*/
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.iframe-text {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+iframe {
+    border: none;
+    margin-bottom: 20px;
+}
+ 
+      
+      
+    /* Estilos para o modal */
+.iframe-modal {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 50px;
+    left: 350px;
+    width: 1000px;
+     height: 100vh; /* Ajusta a altura da tela */
+    /*background: rgba(0, 0, 0, 0.7);*/
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    
+}
+
+/* Conteúdo do iframe */
+.iframe-content {
+    position: relative;
+    width: 95%;
+    height: 600px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+}
+
+/* Botão de fechar */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10%;
+}
+
+.close-btn:hover {
+    background: darkred;
+}
+
+/* Texto dentro do modal */
+.iframe-text p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.iframe-text a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.iframe-text a:hover {
+    text-decoration: underline;
+}  
+      
+/* Estilos para o botão "Abrir nova Aba" */
+.newTabButton {
+    position: absolute;
+    top: 50px;
+    right: 100px; /* Ajuste a distância do botão "Fechar" */
+    background-color: #5aa0da;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: none; /* Inicialmente oculto */
+}
+
+ /* Estilo para o botão "Abrir nova Aba" fora do modal */
+#newTabButtonOutside {
+    position: fixed;
+    top: 120px;
+    right: 140px;
+    background-color: #5aa0da;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: none; /* Inicialmente oculto */
+}
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>DLO</h1>
+        <div class="bar"></div>
+        <p>Logística</p>
+        <button id="documentosButtonVigor">Documentos Vigor</button>
+        <button id="documentosButtonTrabalho">Documentos Trabalho</button>
+        <button id="documentosButtonKpi">KPI's</button>
+        <button id="documentosButtonRNC">RNC's</button>
+        <div class="footer" id="date-time">sexta-feira, 17 de janeiro de 2025 às 08:54:15</div>
+    </div>
+<div class="main-content">
+    <img src="https://static.wixstatic.com/media/a6967f_277fa9bc1eb3418aa1f245c362dbed0a~mv2.png" alt="Imagem no Main Content" style="width: 15%; height: auto;">
+    <div class="header">SGQA - Sistema de Gestão Documental</div>
+    <div class="buttons">
+        <button class="button" onclick="showIframe('presentation1', 'https://docs.google.com/presentation/d/e/2PACX-1vS9_JXHGseoaGXA_Cf9bq87wY7T97hilOiLoiCQYY2C5yd3IMNC-gFG-y940ddLUoB7GFWOobioxnSB/pub?start=false&loop=false&delayms=3000', 'https://drive.google.com/file/d/1NW0sItGeo8vppofabMsrUbIXcy-50Mlw/view?usp=drive_link')"><i class="fas fa-medal"></i></button>
+        <button class="button" onclick="showIframe('document1', 'https://docs.google.com/document/d/e/2PACX-1vQGmwnw88VCKZhN6Mpx3daZa-9OA0Gov9FDfwGBxBESZCDoasSGPmZTtqW5SWW4uA/pub', 'https://drive.google.com/file/d/10XNdLSkaoph1YC2ur0_UnBEAfUN-qDpj/view?usp=drive_link')"><i class="fas fa-book"></i></button>
+        <button class="button" onclick="showIframe('spreadsheet1', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRZ-bMSUqv8IqKv-77JHFn7wJRQMukjF04Ppb2sljNp-viEFeS7uZRux65IBHGPUmKZjZXhLM2fjM_e/pubhtml', 'https://docs.google.com/spreadsheets/d/1e944XK9pqGEM0JgDUa8I--H3P8udeandsoOQYoXaW9s/edit?gid=0#gid=0')"><i class="fas fa-trophy"></i></button>
+    </div>
+</div>
+  
+  
+<!-- Iframe e botões de controle -->
+<div id="iframeContainer" style="display: none; position: fixed; top: 10%; left: 20%; width: 60%; height: 80%; background-color: rgba(255, 255, 255, 0.9); border-radius: 10px; z-index: 1000; padding: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+    <iframe id="iframe" width="100%" height="90%" frameborder="0"></iframe>
+    <div style="text-align: center; margin-top: 10px;">
+        <button onclick="closeIframe()" style="padding: 10px 20px; background-color: #ff5555; color: white; border: none; border-radius: 5px; cursor: pointer;">Fechar</button>
+        <button id="newTabButton" style="padding: 10px 20px; background-color: #5aa0da; color: white; border: none; border-radius: 5px; cursor: pointer;">Abrir nova Aba</button>
+    </div>
+</div>
+
+  <!-- Iframe e botões de controle TROPHY-->
+<div id="iframeContainerTrophy" style="display: none; position: fixed; top: 10%; left: 20%; width: 60%; height: 80%; background-color: rgba(255, 255, 255, 0.9); border-radius: 10px; z-index: 1000; padding: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+    <iframe id="iframeTrophy" width="100%" height="90%" frameborder="0"></iframe>
+    <div style="text-align: center; margin-top: 10px;">
+        <button onclick="closeIframe()" style="padding: 10px 20px; background-color: #ff5555; color: white; border: none; border-radius: 5px; cursor: pointer;">Fechar</button>
+        <button id="newTabButtonTrophy" style="padding: 10px 20px; background-color: #5aa0da; color: white; border: none; border-radius: 5px; cursor: pointer;">Abrir nova Aba2</button>
+    </div>
+</div>
+  
+
+  
+  
+
+    <!-- Calendário e botão para maximizar/minimizar -->
+    <iframe id="calendar" src="https://www.google.com/calendar/embed?src=Y19kODlpbWcwZ3AxaWpvcWE2dDJiaDUzaG1xc0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&ctz=Europe/Lisbon" frameborder="0" scrolling="no"></iframe>
+    <button id="toggleButton2" onclick="toggleIframe2()">max</button>
+
+    <!-- Botão de abrir janela de notas -->
+    <button id="noteButton" onclick="toggleNotesWindow()">Notas</button>
+
+    <!-- Janela de notas -->
+    <div id="notesWindow">
+        <textarea id="notes" placeholder="Escreva suas notas aqui..." style="width: 100%; height: 100%; border: none; resize: none;"></textarea>
+    </div>
+
+    <!-- Container com os botões adicionais -->
+    <div id="additionalButtonsVigor">
+
+        <button class="additionalButtonVigor" onclick="openIframe()">Modelos</button>
+        <button class="additionalButtonVigor">Processo</button>
+        <button class="additionalButtonVigor">Procedimentos</button>
+        <button class="additionalButtonVigor">Instruções</button>
+        <button class="additionalButtonVigor">Modelos</button>
+        <button class="additionalButtonVigor">Manuais</button>
+        <button class="additionalButtonVigor">Botão 7</button>
+    </div>
+
+      <!-- Container com os botões adicionais Trabalho-->
+    <div id="additionalButtonsTrabalho">
+        <button class="additionalButtonTrabalho">Botão 8</button>
+        <button class="additionalButtonTrabalho">Botão 9</button>
+        <button class="additionalButtonTrabalho">Botão 10</button>
+        <button class="additionalButtonTrabalho">Botão 11</button>
+        <button class="additionalButtonTrabalho">Botão 12</button>
+        <button class="additionalButtonTrabalho">Botão 13</button>
+        <button class="additionalButtonTrabalho">Botão 14</button>
+    </div>
+  
+  
+        <!-- Container com os botões adicionais Kpi-->
+    <div id="additionalButtonsKpi">
+        <button class="additionalButtonKpi">Botão 15</button>
+        <button class="additionalButtonKpi">Botão 16</button>
+        <button class="additionalButtonKpi">Botão 17</button>
+        <button class="additionalButtonKpi">Botão 18</button>
+        <button class="additionalButtonKpi">Botão 19</button>
+        <button class="additionalButtonKpi">Botão 20</button>
+        <button class="additionalButtonKpi">Botão 21</button>
+    </div>
+  
+          <!-- Container com os botões adicionais RNC-->
+    <div id="additionalButtonsRNC">
+        <button class="additionalButtonRNC">Botão 22</button>
+        <button class="additionalButtonRNC">Botão 23</button>
+        <button class="additionalButtonRNC">Botão 24</button>
+        <button class="additionalButtonRNC">Botão 25</button>
+        <button class="additionalButtonRNC">Botão 26</button>
+        <button class="additionalButtonRNC">Botão 27</button>
+        <button class="additionalButtonRNC">Botão 28</button>
+    </div>
+  
+  
+  <!-----------------iframe para os documentos modelos, processos...--->
+
+ <!-- Iframe Modal -->
+<div id="iframeModal" class="iframe-modal">
+    <div class="iframe-content">
+        <!-- Botão Fechar -->
+        <button id="closeIframe" class="close-btn">X</button>
+        <div class="iframe-text additionalButtonsVigor">
+            <p><a href="javascript:void(0);" id="MOD_DSQA_01_03"><strong>MOD_DSQA_01_03</strong> - Reclamação a Fornecedor</a></p>
+            <p><a href="javascript:void(0);" id="MOD_DSQA_10_02"><strong>MOD_DSQA_10_02</strong> - Registo de Ocorrência</a></p>
+            <p><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></p>
+            <p><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></p>
+            <p><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></p>
+            <p><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></p>
+            <p><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></p>
+            <p><a href="javascript:void(0);" id="MOD_DSQA_XX_02"><strong>MOD_DSQA_08_02</strong> - XX</a></p>
+        </div>
+        <!-- Iframe para mostrar o conteúdo do link -->
+        <iframe id="iframeModel" src="" width="100%" height="500px" style="display:none;"></iframe>
+    </div>
+</div>
+
+<!-- Botão fora do modal -->
+<button id="newTabButtonOutside" class="newTabButton" style="display: none;" onclick="window.open(document.getElementById('iframeModel').src, '_blank')">
+    Abrir nova Aba
+</button>
+
+
+
+  <!-- Botão fora do modal -->
+<button id="newTabButtonOutside" class="newTabButtonTrophy" style="display: none;" onclick="window.open(document.getElementById('iframeModel').src, '_blank')">
+    Abrir nova Aba
+</button>
+
+
+
+
+  
+  <!---------------------------------------------------------->
+    <script>
+        // Função para alternar a janela de notas
+        function toggleNotesWindow() {
+            const notesWindow = document.getElementById('notesWindow');
+            const notes = document.getElementById('notes');
+
+            if (notesWindow.style.display === 'none' || notesWindow.style.display === '') {
+                notesWindow.style.display = 'block';
+                notes.value = localStorage.getItem('notes') || '';
+            } else {
+                notesWindow.style.display = 'none';
+            }
+        }
+
+        // Salva o conteúdo das notas no localStorage
+        document.getElementById('notes').addEventListener('input', function () {
+            const notesContent = this.value;
+            localStorage.setItem('notes', notesContent);
+        });
+
+      
+      
+      // Função para alternar a visibilidade do container de botões adicionais
+        document.getElementById('documentosButtonVigor').addEventListener('click', function() {
+            const Vigor = document.getElementById('additionalButtonsVigor');
+            if (additionalButtonsVigor.style.display === 'none' || additionalButtonsVigor.style.display === '') {
+                additionalButtonsVigor.style.display = 'block';
+            } else {
+                additionalButtonsVigor.style.display = 'none';
+            }
+        });
+
+
+      
+      
+      // Função para alternar a visibilidade do container de botões adicionaisTrabalho
+        document.getElementById('documentosButtonTrabalho').addEventListener('click', function() {
+            const additionalButtonsTrabalho = document.getElementById('additionalButtonsTrabalho');
+            if (additionalButtonsTrabalho.style.display === 'none' || additionalButtonsTrabalho.style.display === '') {
+                additionalButtonsTrabalho.style.display = 'block';
+            } else {
+                additionalButtonsTrabalho.style.display = 'none';
+            }
+        });
+      
+      
+            // Função para alternar a visibilidade do container de botões adicionaisKpi
+        document.getElementById('documentosButtonKpi').addEventListener('click', function() {
+            const additionalButtonsKpi = document.getElementById('additionalButtonsKpi');
+            if (additionalButtonsKpi.style.display === 'none' || additionalButtonsKpi.style.display === '') {
+                additionalButtonsKpi.style.display = 'block';
+            } else {
+                additionalButtonsKpi.style.display = 'none';
+            }
+        });
+
+      
+                  // Função para alternar a visibilidade do container de botões adicionaisRNC
+        document.getElementById('documentosButtonRNC').addEventListener('click', function() {
+            const additionalButtonsRNC = document.getElementById('additionalButtonsRNC');
+            if (additionalButtonsRNC.style.display === 'none' || additionalButtonsRNC.style.display === '') {
+                additionalButtonsRNC.style.display = 'block';
+            } else {
+                additionalButtonsRNC.style.display = 'none';
+            }
+        });
+  
+      
+      
+      
+  /*----------------------iframe trophy-------------------------*/    
+      
+      
+   function showIframe(type, iframeLink, newTabLink) {
+    const iframeContainerTrophy = document.getElementById('iframeContainerTrophy');
+    const iframeTrophy = document.getElementById('iframeTrophy'); // Corrigido para refletir o ID correto
+    const newTabButtonTrophy = document.getElementById('newTabButtonTrophy');
+    
+    // Exibe o iframe e define o link
+    iframeContainerTrophy.style.display = 'block';
+    iframeTrophy.src = iframeLink;  // Corrigido para usar iframeTrophy com o ID correto
+    
+    // Atualiza o link do botão "Abrir nova Aba"
+    newTabButtonTrophy.onclick = function() {
+        window.open(newTabLink, '_blank');
+    };
+}
+
+// Função para fechar o iframe
+function closeIframe() {
+    const iframeContainerTrophy = document.getElementById('iframeContainerTrophy');
+    const iframeTrophy = document.getElementById('iframeTrophy'); // Corrigido para refletir o ID correto
+
+    if (iframeTrophy && iframeContainerTrophy) {
+        iframeContainerTrophy.style.display = 'none';
+        iframeTrophy.src = ''; // Limpa o iframe
+    } else {
+        console.error('Erro: Elemento iframeContainer ou iframe não encontrado.');
+    }
+}
+
+      
+      
+      
+      <!--------------------MODELOS E PROCESSOS--------------------------->
+  
+// Função para abrir o modal
+function openIframe() {
+    // Exibe o modal
+    document.getElementById("iframeModal").style.display = "flex";
+}
+
+// Função para fechar o modal
+document.getElementById("closeIframe").addEventListener("click", function() {
+    document.getElementById("iframeModal").style.display = "none";
+    document.getElementById("iframeModel").style.display = "none"; // Esconde o iframe
+    document.getElementById("newTabButton").style.display = "none"; // Esconde o botão dentro do modal
+    document.getElementById("newTabButtonOutside").style.display = "none"; // Esconde o botão fora do modal
+});
+
+// Função para carregar o conteúdo do link no iframe, mostrar o botão dentro e fora do modal
+function openLinkInIframe(url) {
+    // Exibe o iframe
+    var iframe = document.getElementById("iframeModel");
+    iframe.src = url;
+    iframe.style.display = "block"; // Torna o iframe visível
+
+    // Exibe o botão "Abrir nova Aba" dentro do modal
+    var button = document.getElementById("newTabButton");
+    button.style.display = "inline-block"; // Torna o botão visível dentro do modal
+
+    // Exibe o botão "Abrir nova Aba" fora do modal
+    var buttonOutside = document.getElementById("newTabButtonOutside");
+    buttonOutside.style.display = "inline-block"; // Torna o botão visível fora do modal
+}
+
+// Adiciona os eventos de clique aos links dentro do container "additionalButtonsVigor"
+document.querySelector(".additionalButtonsVigor")?.querySelectorAll("a").forEach(function(link) {
+    link.addEventListener("click", function() {
+        // Determina o URL a ser aberto no iframe
+        let url = "";
+        switch (this.id) {
+            case "MOD_DSQA_01_03":
+                url = "https://docs.google.com/document/d/1S7zuyaWDP-6FcoKTZSv95g3ud0ZNPvKi/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                break;
+            case "MOD_DSQA_10_02":
+                url = "https://docs.google.com/document/d/11svcfeaBqkOFjMYpb48Xj8-H8GBiA_ic/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                break;
+            case "MOD_DSQA_08_02":
+                url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                break;
+            case "MOD_DSQA_xx_xx":
+                url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                break;
+            case "MOD_DSQA_xx_01":
+                url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                break;
+            case "MOD_DSQA_xx_xx":
+                url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                break;
+            case "MOD_DSQA_XX_02":
+                url = "https://www.record.pt";
+                break;
+        }
+        openLinkInIframe(url);
+    });
+});
+
+
+
+        let isMinimized = true;
+
+        // Função para alternar o iframe do calendário
+        function toggleIframe2() {
+            const iframe = document.getElementById('calendar');
+            const button = document.getElementById('toggleButton2');
+
+            if (isMinimized) {
+                iframe.style.width = '34vw';  // Maximiza a largura
+                iframe.style.height = '45vh'; // Maximiza a altura
+                button.textContent = 'min'; // Atualiza o texto do botão
+            } else {
+                iframe.style.width = '10vw';  // Minimiza a largura
+                iframe.style.height = '5vh'; // Minimiza a altura
+                button.textContent = 'max'; // Atualiza o texto do botão
+            }
+
+            isMinimized = !isMinimized;
+        }
+      
+
+      
+      <!------------------------------------------------------------------->
+ 
+    </script>
+</body>
+</html>
