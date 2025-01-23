@@ -87,7 +87,11 @@
                 const height = screen.height;
                 const left = screen.width - width;
                 const top = 0;
-                window.open(credentials[username].url, '_blank', `width=${width},height=${height},left=${left},top=${top},toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no`);
+                const newWindow = window.open('', '_blank', `width=${width},height=${height},left=${left},top=${top},toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no`);
+                if (newWindow) {
+                    newWindow.location.href = credentials[username].url;
+                    newWindow.focus();
+                }
             } else {
                 // Exibe mensagem de erro caso o login seja inválido
                 errorDiv.textContent = "Usuário ou senha inválidos.";
