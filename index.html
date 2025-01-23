@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SMG Desk</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .login-container input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <input type="text" id="username" placeholder="Usuário" required>
+        <input type="password" id="password" placeholder="Senha" required>
+        <button onclick="login()">Entrar</button>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        // Definindo as credenciais e as URLs correspondentes
+        const credentials = {
+            "DSQA": { password: "1", url: "https://tinyurl.com/5b3rm5s2" },
+            "DLO": { password: "2", url: "https://tinyurl.com/3phjsftx" },
+            "DEN": { password: "3", url: "https://www.abola.pt" },
+            "DAT": { password: "4", url: "https://www.abola.pt" },
+            "DFI": { password: "5", url: "https://www.abola.pt" },
+            "DCO": { password: "6", url: "https://www.abola.pt" },
+            "DPR": { password: "7", url: "https://www.abola.pt" }
+        };
+
+        // Função para realizar o login
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorDiv = document.getElementById("error");
+
+            // Verifica se as credenciais estão corretas
+            if (credentials[username] && credentials[username].password === password) {
+                // Redireciona para a URL correspondente
+                window.location.href = credentials[username].url;
+            } else {
+                // Exibe mensagem de erro caso o login seja inválido
+                errorDiv.textContent = "Usuário ou senha inválidos.";
+            }
+        }
+    </script>
+</body>
+</html>
