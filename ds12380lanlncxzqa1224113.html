@@ -421,11 +421,11 @@ iframe {
 .iframe-modal {
     display: none; /* Inicialmente oculto */
     position: fixed;
-    top: 5%;
-    left: 350px;
-    width: 80%;
+    top: 0px;
+    left: 250px;
+    width: 90%;
      height: 100vh; /* Ajusta a altura da tela */
-    /*background: rgba(0, 0, 0, 0.7);*/
+    /*background: rgba(0, 0, 0, 0.7);*/ 
     justify-content: center;
     align-items: center;
     z-index: 9999;
@@ -436,7 +436,7 @@ iframe {
 .iframe-content {
     position: relative;
     width: 80%;
-    height: 70%;
+    height: 90%;
     padding: 10px;
     background: white;
     border-radius: 8px;
@@ -494,7 +494,7 @@ iframe {
 #newTabButtonOutside {
     position: fixed;
     top: 120px;
-    right: 140px;
+    right: 10px;
     background-color: #5aa0da;
     color: white;
     border: none;
@@ -730,17 +730,17 @@ iframe {
             <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_11_03"><strong>MOD_DSQA_11_03</strong> - Lista de Comprovação</a></div>
             <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_13_02"><strong>MOD_DSQA_13_02</strong> - Planeamento Anual de Auditorias</a></div>
             <div class="grid-item">
-                <a href="https://drive.google.com" target="_blank" id="GOOGLE_DRIVE">
-                    <strong>GOOGLE DRIVE</strong>
-                    <img src="https://bpb-us-e2.wpmucdn.com/sites.uci.edu/dist/a/4195/files/2021/01/Google_Drive_-_New_Logo.png" alt="Imagem do Google Drive" style="width: 50%; margin-left: 5px;">
-                </a>
-            </div>
-            <div class="grid-item">
-                <a href="https://www.appsheet.com" target="_blank" id="MOD_DSQA_26_02">
-                    <strong>MOD_DSQA_26_02</strong> - Registo de Ocorrências (plataforma)
-                    <img src="https://miro.medium.com/v2/resize:fit:1024/0*_2MR5JVuxQjZBDp6.png" alt="Imagem do AppSheet" style="width: 50%; margin-left: 5px;">
-                </a>
-            </div>
+    <a href="javascript:void(0);" onclick="openInNewWindow('https://drive.google.com');" id="GOOGLE_DRIVE">
+        <strong>GOOGLE DRIVE</strong>
+        <img src="https://bpb-us-e2.wpmucdn.com/sites.uci.edu/dist/a/4195/files/2021/01/Google_Drive_-_New_Logo.png" alt="Imagem do Google Drive" style="width: 50%; margin-left: 5px;">
+    </a>
+</div>
+<div class="grid-item">
+    <a href="javascript:void(0);" onclick="openInNewWindow('https://www.appsheet.com/start/9f396035-0e59-4744-95c6-31ccf6992903');" id="MOD_DSQA_26_02">
+        <strong>MOD_DSQA_26_02</strong> - Registo de Ocorrências (plataforma)
+        <img src="https://miro.medium.com/v2/resize:fit:1024/0*_2MR5JVuxQjZBDp6.png" alt="Imagem do AppSheet" style="width: 50%; margin-left: 5px;">
+    </a>
+</div>
         </div>
         <!-- Iframe para mostrar o conteúdo do link -->
         <iframe id="iframeModel" src="" width="100%" height="1500px" style="display:none;"></iframe>
@@ -924,15 +924,7 @@ document.querySelector(".additionalButtonsVigor")?.querySelectorAll("a").forEach
             case "MOD_DSQA_10_02":
                 url = "https://docs.google.com/document/d/11svcfeaBqkOFjMYpb48Xj8-H8GBiA_ic/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
                 break;
-            case "MOD_DSQA_08_02":
-                url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
-                break;
-            case "MOD_DSQA_26_02":
-                url = "https://tinyurl.com/yc82y2jt";
-                break;
-            case "GOOGLE_DRIVE":
-                url = "https://drive.google.com/drive/folders/122AkbA6R-Bq-hvbWCYjC3NFUrlrh25MD?usp=sharing";
-                break;
+
             case "MOD_DSQA_xx_xx":
                 url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
                 break;
@@ -977,6 +969,14 @@ document.querySelector(".additionalButtonsVigor")?.querySelectorAll("a").forEach
       
       
       <!------------------------------------------------------------------->
+      
+  function openInNewWindow(url) {
+        var width = 800; // Largura da janela
+        var height = window.outerHeight; // Altura total da janela, incluindo a interface do navegador
+        window.open(url, '_blank', 'width=' + width + ',height=' + height + ',scrollbars=yes');
+    }
+      
+      
       
       
    function closeApp() {
