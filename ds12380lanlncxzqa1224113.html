@@ -421,9 +421,9 @@ iframe {
 .iframe-modal {
     display: none; /* Inicialmente oculto */
     position: fixed;
-    top: 50px;
+    top: 5%;
     left: 350px;
-    width: 1000px;
+    width: 80%;
      height: 100vh; /* Ajusta a altura da tela */
     /*background: rgba(0, 0, 0, 0.7);*/
     justify-content: center;
@@ -435,8 +435,8 @@ iframe {
 /* Conteúdo do iframe */
 .iframe-content {
     position: relative;
-    width: 95%;
-    height: 600px;
+    width: 80%;
+    height: 70%;
     padding: 10px;
     background: white;
     border-radius: 8px;
@@ -531,7 +531,28 @@ iframe {
             transition: transform 0.3s ease;
         }
 
-
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 10px;
+    padding: 20px;
+}
+.grid-item {
+    background: #f4f4f4;
+    padding: 10px;
+    text-align: left;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.grid-item a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+.grid-item img {
+    display: block;
+    margin: 5px auto 0;
+}
 
 
     </style>
@@ -700,27 +721,29 @@ iframe {
     <div class="iframe-content">
         <!-- Botão Fechar -->
         <button id="closeIframe" class="close-btn">X</button>
-        <div class="iframe-text additionalButtonsVigor">
-          
-            <p><a href="javascript:void(0);" id="MOD_DSQA_01_03"><strong>MOD_DSQA_01_03</strong> - Reclamação a Fornecedor</a></p>
-          
-            <p><a href="javascript:void(0);" id="MOD_DSQA_10_02"><strong>MOD_DSQA_10_02</strong> - Registo de Ocorrência (modelo)</a></p>
-            <p><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></p>
-          
-         <p><a href="javascript:void(0);" id="MOD_DSQA_09_02"><strong>MOD_DSQA_09_02</strong> - Plano de Auditoria interna</a></p>
-          
-            <p><a href="javascript:void(0);" id="MOD_DSQA_11_03"><strong>MOD_DSQA_11_03 </strong> - Lista de Comprovação</a></p>
-          
-            <p><a href="javascript:void(0);" id="MOD_DSQA_13_02"><strong>MOD_DSQA_13_02 </strong> - Planeamento Anual de Auditorias</a></p>
-          
-            <p><a href="javascript:void(0);" id="GOOGLE_DRIVE"><strong>GOOGLE DRIVE</strong><p><img src="https://bpb-us-e2.wpmucdn.com/sites.uci.edu/dist/a/4195/files/2021/01/Google_Drive_-_New_Logo.png" alt="Imagem do Google Drive" style="width: 15%; height: 40%; margin-left: 5px;">
-    </a></p>
-
-            <p><a href="javascript:void(0);" id="MOD_DSQA_26_02"><strong>MOD_DSQA_26_02</strong> - Registo de Ocorrências (plataforma)<p><img src="https://miro.medium.com/v2/resize:fit:1024/0*_2MR5JVuxQjZBDp6.png" alt="Imagem do Google Drive" style="width: 20%; height: 100%; margin-left: 5px;"></a><p></p>
-
+        <div class="iframe-text additionalButtonsVigor grid-container">
+            
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_01_03"><strong>MOD_DSQA_01_03</strong> - Reclamação a Fornecedor</a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_10_02"><strong>MOD_DSQA_10_02</strong> - Registo de Ocorrência (modelo)</a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_09_02"><strong>MOD_DSQA_09_02</strong> - Plano de Auditoria interna</a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_11_03"><strong>MOD_DSQA_11_03</strong> - Lista de Comprovação</a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_13_02"><strong>MOD_DSQA_13_02</strong> - Planeamento Anual de Auditorias</a></div>
+            <div class="grid-item">
+                <a href="https://drive.google.com" target="_blank" id="GOOGLE_DRIVE">
+                    <strong>GOOGLE DRIVE</strong>
+                    <img src="https://bpb-us-e2.wpmucdn.com/sites.uci.edu/dist/a/4195/files/2021/01/Google_Drive_-_New_Logo.png" alt="Imagem do Google Drive" style="width: 50%; margin-left: 5px;">
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="https://www.appsheet.com" target="_blank" id="MOD_DSQA_26_02">
+                    <strong>MOD_DSQA_26_02</strong> - Registo de Ocorrências (plataforma)
+                    <img src="https://miro.medium.com/v2/resize:fit:1024/0*_2MR5JVuxQjZBDp6.png" alt="Imagem do AppSheet" style="width: 50%; margin-left: 5px;">
+                </a>
+            </div>
         </div>
         <!-- Iframe para mostrar o conteúdo do link -->
-        <iframe id="iframeModel" src="" width="100%" height="500px" style="display:none;"></iframe>
+        <iframe id="iframeModel" src="" width="100%" height="1500px" style="display:none;"></iframe>
     </div>
 </div>
 
