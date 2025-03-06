@@ -634,7 +634,7 @@ iframe {
     <iframe id="iframeTrophy" width="100%" height="90%" frameborder="0"></iframe>
     <div style="text-align: center; margin-top: 10px;">
         <button onclick="closeIframe()" style="padding: 10px 20px; background-color: #ff5555; color: white; border: none; border-radius: 5px; cursor: pointer;">Fechar</button>
-        <button id="newTabButtonTrophy" style="padding: 10px 20px; background-color: #5aa0da; color: white; border: none; border-radius: 5px; cursor: pointer;">Abrir nova Aba2</button>
+        <button id="newTabButtonTrophy" style="padding: 10px 20px; background-color: #5aa0da; color: white; border: none; border-radius: 5px; cursor: pointer;">Abrir nova Aba</button>
     </div>
 </div>
   
@@ -723,12 +723,12 @@ iframe {
         <button id="closeIframe" class="close-btn">X</button>
         <div class="iframe-text additionalButtonsVigor grid-container">
             
-            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_01_03"><strong>MOD_DSQA_01_03</strong> - Reclamação a Fornecedor</a></div>
-            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_10_02"><strong>MOD_DSQA_10_02</strong> - Registo de Ocorrência (modelo)</a></div>
-            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_08_02"><strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade</a></div>
-            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_09_02"><strong>MOD_DSQA_09_02</strong> - Plano de Auditoria interna</a></div>
-            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_11_03"><strong>MOD_DSQA_11_03</strong> - Lista de Comprovação</a></div>
-            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_13_02"><strong>MOD_DSQA_13_02</strong> - Planeamento Anual de Auditorias</a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_01_03">👇<strong>MOD_DSQA_01_03</strong> - Reclamação a Fornecedor <p><span class="open-in-new-tab">👉↗️📂</span></a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_10_02">👇<strong>MOD_DSQA_10_02</strong> - Registo de Ocorrência (modelo)<p><span class="open-in-new-tab">👉↗️📂</span></a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_08_02">👇<strong>MOD_DSQA_08_02</strong> - Flash Alerta da Qualidade<p><span class="open-in-new-tab">👉↗️📂</span></a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_09_02">👇<strong>MOD_DSQA_09_02</strong> - Plano de Auditoria interna<p><span class="open-in-new-tab">👉↗️📂</span></a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_11_03">👇<strong>MOD_DSQA_11_03</strong> - Lista de Comprovação<p><span class="open-in-new-tab">👉↗️📂</span></a></div>
+            <div class="grid-item"><a href="javascript:void(0);" id="MOD_DSQA_13_02">👇<strong>MOD_DSQA_13_02</strong> - Planeamento Anual de Auditorias<p><span class="open-in-new-tab">👉↗️📂</span></a></div>
             <div class="grid-item">
     <a href="javascript:void(0);" onclick="openInNewWindow('https://drive.google.com');" id="GOOGLE_DRIVE">
         <strong>GOOGLE DRIVE</strong>
@@ -747,20 +747,10 @@ iframe {
     </div>
 </div>
 
-<!-- Botão fora do modal -->
-<button id="newTabButtonOutside" class="newTabButton" style="display: none;" onclick="window.open(document.getElementById('iframeModel').src, '_blank')">
-    Abrir nova Aba
-</button>
 
 
 
-  <!-- Botão fora do modal -->
-<button id="newTabButtonOutside" class="newTabButtonTrophy" style="display: none;" onclick="window.open(document.getElementById('iframeModel').src, '_blank')">
-    Abrir nova Aba
-</button>
-
-
-  
+ 
 
 
   
@@ -897,19 +887,26 @@ document.getElementById("closeIframe").addEventListener("click", function() {
 });
 
 // Função para carregar o conteúdo do link no iframe, mostrar o botão dentro e fora do modal
-function openLinkInIframe(url) {
+function openLinkInIframe(url, isSpecialLink) {
     // Exibe o iframe
     var iframe = document.getElementById("iframeModel");
     iframe.src = url;
     iframe.style.display = "block"; // Torna o iframe visível
 
-    // Exibe o botão "Abrir nova Aba" dentro do modal
-    var button = document.getElementById("newTabButton");
-    button.style.display = "inline-block"; // Torna o botão visível dentro do modal
+    // Se for um link especial, exibe o botão "Abrir nova Aba" dentro do modal
+    if (isSpecialLink) {
+        var button = document.getElementById("newTabButton");
+        button.style.display = "inline-block"; // Torna o botão visível dentro do modal
 
-    // Exibe o botão "Abrir nova Aba" fora do modal
-    var buttonOutside = document.getElementById("newTabButtonOutside");
-    buttonOutside.style.display = "inline-block"; // Torna o botão visível fora do modal
+        var buttonOutside = document.getElementById("newTabButtonOutside");
+        buttonOutside.style.display = "inline-block"; // Torna o botão visível fora do modal
+    }
+}
+
+// Função para abrir o link em uma nova aba
+function openInNewWindow() {
+    var iframe = document.getElementById("iframeModel");
+    window.open(iframe.src, '_blank');
 }
 
 // Adiciona os eventos de clique aos links dentro do container "additionalButtonsVigor"
@@ -917,15 +914,60 @@ document.querySelector(".additionalButtonsVigor")?.querySelectorAll("a").forEach
     link.addEventListener("click", function() {
         // Determina o URL a ser aberto no iframe
         let url = "";
+        let isSpecialLink = false; // Variável para saber se é um link especial
+
         switch (this.id) {
+            case "MOD_DSQA_01_03":
+                url = "https://docs.google.com/document/d/1S7zuyaWDP-6FcoKTZSv95g3ud0ZNPvKi/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                isSpecialLink = true;
+                break;
+            case "MOD_DSQA_10_02":
+                url = "https://docs.google.com/document/d/11svcfeaBqkOFjMYpb48Xj8-H8GBiA_ic/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                isSpecialLink = true;
+                break;
+            case "MOD_DSQA_08_02":
+                url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                isSpecialLink = true;
+                break;
+            case "MOD_DSQA_09_02":
+                url = "https://docs.google.com/spreadsheets/d/16C9cBB5j-cwAHcchdBr2DnYplXxIbce5/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                isSpecialLink = true;
+                break;
+            case "MOD_DSQA_11_03":
+                url = "https://docs.google.com/spreadsheets/d/186gRTRUNeTM-fM1WF9e5HPuIFyiWiWAV/edit?usp=sharing&rtpof=true&sd=true";
+                isSpecialLink = true;
+                break;
+            case "MOD_DSQA_13_02":
+                url = "https://docs.google.com/spreadsheets/d/107TttSRvnMxXgf9DyYR8sKbV41-IU68C/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
+                isSpecialLink = true;
+                break;
+            default:
+                url = ""; // Para os links não específicos, não vamos alterar o comportamento
+                break;
+        }
+
+        // Chama a função para carregar o conteúdo do iframe e mostrar os botões apenas para links especiais
+        openLinkInIframe(url, isSpecialLink);
+    });
+});
+
+      
+      // Função para abrir o link em uma nova aba ao clicar no emoji
+document.querySelectorAll('.open-in-new-tab').forEach(function(emoji) {
+    emoji.addEventListener('click', function(e) {
+        e.preventDefault(); // Impede o clique no link original
+        var linkId = this.closest('a').id; // Encontra o id do link mais próximo
+        var url = "";
+
+        // Determina o URL com base no ID do link
+        switch (linkId) {
             case "MOD_DSQA_01_03":
                 url = "https://docs.google.com/document/d/1S7zuyaWDP-6FcoKTZSv95g3ud0ZNPvKi/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
                 break;
             case "MOD_DSQA_10_02":
                 url = "https://docs.google.com/document/d/11svcfeaBqkOFjMYpb48Xj8-H8GBiA_ic/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
                 break;
-
-            case "MOD_DSQA_xx_xx":
+            case "MOD_DSQA_08_02":
                 url = "https://docs.google.com/spreadsheets/d/125AP1yOFD1eeHg-oqEUWybdfppnSDpMH/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
                 break;
             case "MOD_DSQA_09_02":
@@ -937,14 +979,57 @@ document.querySelector(".additionalButtonsVigor")?.querySelectorAll("a").forEach
             case "MOD_DSQA_13_02":
                 url = "https://docs.google.com/spreadsheets/d/107TttSRvnMxXgf9DyYR8sKbV41-IU68C/edit?usp=sharing&ouid=108895306904321489520&rtpof=true&sd=true";
                 break;
-            case "MOD_DSQA_XX_xx":
-                url = "https://www.record.pt";
+            default:
+                url = ""; // Para os links não específicos, não vamos alterar o comportamento
                 break;
         }
-        openLinkInIframe(url);
+
+        // Abre o link numa nova aba
+        window.open(url, '_blank');
     });
 });
 
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
 
         let isMinimized = true;
