@@ -504,7 +504,38 @@ iframe {
         <button id="documentosButtonRNC">RNC's</button><p><p>
         <button id="documentosButtonLOG" onclick="closeApp()">Log Out</button>
         
-        <div class="footer" id="date-time">sexta-feira, 17 de janeiro de 2025 às 08:54:15</div>
+      
+      
+          <div class="footer" id="date-time"></div>
+
+    <script>
+        function formatarDataHora() {
+            const data = new Date();
+            const opcoes = { 
+                weekday: 'long', 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            };
+            return data.toLocaleDateString('pt-PT', opcoes);
+        }
+
+        function atualizarDataHora() {
+            document.getElementById('date-time').textContent = formatarDataHora();
+        }
+
+        atualizarDataHora();
+        setInterval(atualizarDataHora, 1000); // Atualiza a cada segundo
+    </script>
+      
+      
+      
+      
+      
+      
     </div>
 <div class="main-content">
     <img src="https://static.wixstatic.com/media/a6967f_277fa9bc1eb3418aa1f245c362dbed0a~mv2.png" alt="Imagem no Main Content" style="width: 15%; height: auto;">
