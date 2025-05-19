@@ -617,7 +617,7 @@ iframe {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 9999;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -632,6 +632,7 @@ iframe {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    
 }
 
 .card-container {
@@ -684,8 +685,43 @@ background: #f4f4f4;
 }
 
 
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
 
 
+.hover-underline {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+}
+
+.hover-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background-color: #007bff; /* cor do sublinhado */
+    transition: width 0.3s ease-in-out;
+}
+
+.hover-underline:hover::after {
+    width: 100%;
+}
 
 
     </style>
@@ -891,15 +927,23 @@ background: #f4f4f4;
 
         <!-- Cards clicáveis -->
         <div class="card-container">
-            <div class="card" onclick="loadIframe('https://docs.google.com/spreadsheets/d/17vsZcOi6Wwvd68iYZqoGu_EJ0Kp55avq/preview')">
-                <h3>PS_DSQA_02_01</h3>
-                <p>Mapeamento de Processos</p>
+            <div class="card">
+            
+            <span class="hover-underline" onclick="loadIframe('https://docs.google.com/spreadsheets/d/17vsZcOi6Wwvd68iYZqoGu_EJ0Kp55avq/preview')">👉📄
+   					 </span>
+                <h3>
+                    PS_DSQA_01_01
+                </h3> 
+                
+                    Mapa de Processos MACRO
+                <p>
+  <span class="hover-underline open-in-new-tab" onclick="window.open('https://docs.google.com/spreadsheets/d/17vsZcOi6Wwvd68iYZqoGu_EJ0Kp55avq/preview', '_blank')">
+        👉↗️📂
+    </span>
             </div>
-            <div class="card" onclick="loadIframe('https://drive.google.com/file/d/10fo2eugWlfWjS4UQLIsdsm71trZQOpgv/preview')">
-                <h3>PS_DSQA_01_01</h3>
-                <p>Mapa de Processos MACRO</p>
-            </div>
+                 
         </div>
+        
 
         <!-- Iframe dinâmico -->
         <div class="iframe-wrapper">
@@ -907,7 +951,6 @@ background: #f4f4f4;
         </div>
     </div>
 </div>
-
 
   
   <!---------------------------------------------------------->
